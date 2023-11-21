@@ -3,12 +3,11 @@ package stack
 import (
 	"errors"
 	"fmt"
-	"github.com/huaanhuang/datastructure/port"
 )
 
 // NewArrayStack 栈(数组实现)
 // cap: 栈容量
-func NewArrayStack[T any](cap uint) port.IStack[T] {
+func NewArrayStack[T any](cap uint) IStack[T] {
 	return &arrayStack[T]{
 		data: make([]T, cap, cap),
 		size: cap,
