@@ -24,7 +24,7 @@ type arrayStack[T any] struct {
 
 // Push 入栈
 func (obj *arrayStack[T]) Push(item T) error {
-	if obj.length == obj.size {
+	if obj.IsFull() {
 		return errors.New(fmt.Sprintf("exceeds stack capacity %d", obj.size))
 	}
 	obj.cur++
@@ -47,6 +47,11 @@ func (obj *arrayStack[T]) Pop() (item T, err error) {
 // IsEmpty 栈是否为空
 func (obj *arrayStack[T]) IsEmpty() bool {
 	return obj.length == 0
+}
+
+// IsFull 栈是否为满
+func (obj *arrayStack[T]) IsFull() bool {
+	return obj.length == obj.size
 }
 
 // Size 栈当前大小

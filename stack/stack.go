@@ -8,6 +8,8 @@ type IStack[T any] interface {
 	Pop() (item T, err error)
 	// IsEmpty 栈是否为空
 	IsEmpty() bool
+	// IsFull 栈是否满
+	IsFull() bool
 	// Size 栈当前大小
 	Size() uint
 	// Peek 返回栈顶元素

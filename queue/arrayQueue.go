@@ -2,7 +2,6 @@ package queue
 
 import (
 	"errors"
-	"time"
 )
 
 func NewArrayQueue[T any](size uint) IQueue[T] {
@@ -38,7 +37,7 @@ func (q *arrayQueue[T]) IsFull() bool {
 }
 
 // Put 入队
-func (q *arrayQueue[T]) Put(item T, timeout time.Duration) error {
+func (q *arrayQueue[T]) Put(item T) error {
 	// 判断队列是否已满
 	if q.IsFull() {
 		return errors.New("queue is full")
@@ -49,7 +48,7 @@ func (q *arrayQueue[T]) Put(item T, timeout time.Duration) error {
 }
 
 // Get 出队
-func (q *arrayQueue[T]) Get(timeout time.Duration) (T, error) {
+func (q *arrayQueue[T]) Get() (T, error) {
 	if q.IsEmpty() {
 		return *new(T), errors.New("queue is empty")
 	}

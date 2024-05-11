@@ -1,9 +1,16 @@
 package stack
 
-import "errors"
+import (
+	"errors"
+	"fmt"
+)
 
-func NewLinkStack[T any]() IStack[T] {
-	return &linkStack[T]{}
+func NewLinkStack[T any](maxSizeParam ...int) IStack[T] {
+	maxSize := -1
+	if len(maxSizeParam) > 0 {
+		maxSize = maxSizeParam[0]
+	}
+	return &linkStack[T]{maxlength: maxSize}
 }
 
 type Node[T any] struct {
@@ -12,12 +19,16 @@ type Node[T any] struct {
 }
 
 type linkStack[T any] struct {
-	head   *Node[T] // 头节点
-	length uint     // 栈大小
+	head      *Node[T] // 头节点
+	length    uint     // 栈大小
+	maxlength int      // 栈最大大小
 }
 
 // Push 入栈
 func (obj *linkStack[T]) Push(item T) error {
+	if obj.IsFull() {
+		return fmt.Errorf("stack is full with %d element", obj.maxlength)
+	}
 	node := &Node[T]{Val: item}
 	if obj.head == nil {
 		obj.head = node
@@ -43,6 +54,11 @@ func (obj *linkStack[T]) Pop() (item T, err error) {
 // IsEmpty 栈是否为空
 func (obj *linkStack[T]) IsEmpty() bool {
 	return obj.length == 0
+}
+
+// IsFull 栈是否为满
+func (obj *linkStack[T]) IsFull() bool {
+	return int(obj.length) == obj.maxlength
 }
 
 // Size 栈大小
